@@ -24,7 +24,7 @@ export default function Home() {
           <p className="text-gray-600">Upload your questions and start practicing</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6 border border-gray-100">
           <h2 className="text-xl font-semibold mb-4 text-gray-600">Upload Questions</h2>
           <FileUpload />
 
@@ -55,7 +55,7 @@ export default function Home() {
           )}
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6 text-gray-600">
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6 text-gray-600 border border-gray-100">
           <h2 className="text-xl font-semibold mb-4">Instructions</h2>
           <ul className="list-disc pl-5 space-y-2">
             <li>Upload a JSON file with quiz questions</li>
@@ -92,10 +92,10 @@ export default function Home() {
           </div>
         </div>
 
-        <footer className="mt-auto bg-white border-t border-gray-200 py-8">
+        <footer className="mt-auto bg-white py-8 rounded-lg shadow-md border border-gray-100">
           <div className="max-w-4xl mx-auto px-4">
             <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="mb-4 md:mb-0">
+              <div className="mb-4 md:mb-0 flex flex-col items-center md:items-start">
                 <h2 className="text-xl font-bold text-gray-800">QuizWhiz</h2>
                 <p className="text-gray-600 text-sm mt-1">An interactive quiz application for self-assessment.</p>
               </div>
@@ -113,9 +113,9 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="border-t border-gray-200 mt-6 pt-6 flex flex-col md:flex-row justify-between text-gray-600 text-sm">
+            <div className="border-t border-gray-200 mt-4 pt-4 md:mt-6 md:pt-6 flex flex-col md:flex-row justify-between items-center text-gray-600 text-sm">
               <p>© {new Date().getFullYear()} QuizWhiz. All rights reserved.</p>
-              <div className="flex space-x-4 mt-3 md:mt-0">
+              <div className="flex flex-col md:flex-row items-center md:space-x-4 mt-3 md:mt-0">
                 <Link href="/privacy-policy" className="hover:text-blue-600">Privacy Policy</Link>
                 <Link href="/terms" className="hover:text-blue-600">Terms of Use</Link>
                 <Link href="/contact" className="hover:text-blue-600">Contact</Link>
