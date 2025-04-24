@@ -1,103 +1,129 @@
-import Image from "next/image";
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useSelector, useDispatch } from 'react-redux';
+import { startQuiz } from '../redux/quizSlice';
+import FileUpload from '../components/FileUpload';
+import Link from 'next/link';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { questions, error, isLoading } = useSelector((state) => state.quiz);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleStartQuiz = () => {
+    dispatch(startQuiz());
+    router.push('/practice');
+  };
+
+  return (
+    <main className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-10">
+          <h1 className="text-3xl font-bold mb-2 text-gray-800">QuizWhiz</h1>
+          <p className="text-gray-600">Upload your questions and start practicing</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <h2 className="text-xl font-semibold mb-4 text-gray-600">Upload Questions</h2>
+          <FileUpload />
+
+          {error && (
+            <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-md">
+              {error}
+            </div>
+          )}
+
+          {isLoading && (
+            <div className="mt-4 text-center text-gray-500">
+              Loading questions...
+            </div>
+          )}
+
+          {questions.length > 0 && (
+            <div className="mt-6 text-center">
+              <p className="text-green-600 mb-2">
+                {questions.length} questions loaded successfully!
+              </p>
+              <button
+                onClick={handleStartQuiz}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                Start Quiz
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="bg-white rounded-lg shadow-md p-6 mb-6 text-gray-600">
+          <h2 className="text-xl font-semibold mb-4">Instructions</h2>
+          <ul className="list-disc pl-5 space-y-2">
+            <li>Upload a JSON file with quiz questions</li>
+            <li>Questions will be shuffled automatically</li>
+            <li>Timer will start when you begin the quiz</li>
+            <li>Answer all questions and submit to see your score</li>
+          </ul>
+          <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+            <h3 className="font-medium text-yellow-800 mb-1">JSON Format Example:</h3>
+            <pre className="text-xs text-gray-700 overflow-x-auto">
+              {`[
+  {
+    "question": "A traditional cryptosystem consists of",
+    "options": {
+      "a": "Three tuple",
+      "b": "Four tuple",
+      "c": "Five tuple",
+      "d": "Six tuple"
+    },
+    "answer": "c"
+  },
+  {
+    "question": "Let P,C,K denotes plaintext, ciphertext and key space...",
+    "options": {
+      "a": "6",
+      "b": "7",
+      "c": "8",
+      "d": "9"
+    },
+    "answer": "b"
+  }
+]`}
+            </pre>
+          </div>
+        </div>
+
+        <footer className="mt-auto bg-white border-t border-gray-200 py-8">
+          <div className="max-w-4xl mx-auto px-4">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <div className="mb-4 md:mb-0">
+                <h2 className="text-xl font-bold text-gray-800">QuizWhiz</h2>
+                <p className="text-gray-600 text-sm mt-1">An interactive quiz application for self-assessment</p>
+              </div>
+
+              <div className="text-center md:text-right">
+                <p className="text-gray-700 font-medium">Designed & Developed by</p>
+                <div className="flex items-center justify-center md:justify-end space-x-4 mt-2">
+                  <Link href="https://www.linkedin.com/in/chakraborty-niladri/" className="text-blue-600 hover:text-blue-800 flex items-center" target="_blank" rel="noopener noreferrer">
+                    <span className="mr-1">Niladri Chakraborty</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-gray-200 mt-6 pt-6 flex flex-col md:flex-row justify-between text-gray-600 text-sm">
+              <p>© {new Date().getFullYear()} QuizWhiz. All rights reserved.</p>
+              <div className="flex space-x-4 mt-3 md:mt-0">
+                <Link href="/privacy-policy" className="hover:text-blue-600">Privacy Policy</Link>
+                <Link href="/terms" className="hover:text-blue-600">Terms of Use</Link>
+                <Link href="/contact" className="hover:text-blue-600">Contact</Link>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
   );
 }
