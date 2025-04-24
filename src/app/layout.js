@@ -5,8 +5,8 @@ import { ReduxProvider } from './providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'MCQ Practice App',
-  description: 'Practice MCQs with timer and score tracking',
+  title: 'QuizWhiz - Practice MCQs',
+  description: 'An interactive quiz application for self-assessment.',
 };
 
 export default function RootLayout({ children }) {

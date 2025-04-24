@@ -97,7 +97,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="mb-4 md:mb-0">
                 <h2 className="text-xl font-bold text-gray-800">QuizWhiz</h2>
-                <p className="text-gray-600 text-sm mt-1">An interactive quiz application for self-assessment</p>
+                <p className="text-gray-600 text-sm mt-1">An interactive quiz application for self-assessment.</p>
               </div>
 
               <div className="text-center md:text-right">
