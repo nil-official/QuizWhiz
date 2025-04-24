@@ -47,7 +47,7 @@ export default function ResultsPage() {
             <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-8">
                     <h1 className="text-gray-800 text-3xl font-bold mb-2">Quiz Results</h1>
-                    <p className="text-gray-600">Here's how you performed</p>
+                    <p className="text-gray-600">Here&apos;s how you performed</p>
                 </div>
 
                 <div className="bg-white rounded-lg shadow-md p-6 mb-8">
