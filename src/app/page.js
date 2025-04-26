@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { startQuiz } from '../redux/quizSlice';
 import FileUpload from '../components/FileUpload';
 import Link from 'next/link';
+import format from '../../public/format.json';
 
 export default function Home() {
   const router = useRouter();
@@ -66,28 +67,7 @@ export default function Home() {
           <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
             <h3 className="font-medium text-yellow-800 mb-1">JSON Format Example:</h3>
             <pre className="text-xs text-gray-700 overflow-x-auto">
-              {`[
-  {
-    "question": "A traditional cryptosystem consists of",
-    "options": {
-      "a": "Three tuple",
-      "b": "Four tuple",
-      "c": "Five tuple",
-      "d": "Six tuple"
-    },
-    "answer": "c"
-  },
-  {
-    "question": "Let P,C,K denotes plaintext, ciphertext and key space...",
-    "options": {
-      "a": "6",
-      "b": "7",
-      "c": "8",
-      "d": "9"
-    },
-    "answer": "b"
-  }
-]`}
+              {JSON.stringify(format, null, 2)}
             </pre>
           </div>
         </div>
@@ -97,7 +77,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="mb-4 md:mb-0 flex flex-col items-center md:items-start">
                 <h2 className="text-xl font-bold text-gray-800">QuizWhiz</h2>
-                <p className="text-gray-600 text-sm mt-1">An interactive quiz application for self-assessment.</p>
+                <p className="text-gray-600 text-sm mt-1 text-center">An interactive quiz application for self-assessment.</p>
               </div>
 
               <div className="text-center md:text-right">

@@ -1,0 +1,22 @@
+[
+    {
+        "question": "Which planet is known as the Red Planet?",
+        "options": {
+            "a": "Venus",
+            "b": "Mars",
+            "c": "Jupiter",
+            "d": "Saturn"
+        },
+        "answer": "b"
+    },
+    {
+        "question": "What is the capital city of France?",
+        "options": {
+            "a": "London",
+            "b": "Berlin",
+            "c": "Paris",
+            "d": "Rome"
+        },
+        "answer": "c"
+    }
+]
