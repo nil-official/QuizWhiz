@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { answerQuestion } from '../redux/quizSlice';
 
@@ -19,13 +20,42 @@ export default function QuestionCard() {
         dispatch(answerQuestion({ questionIndex: currentQuestionIndex, answerKey: optionKey }));
     };
 
+    const renderHTML = (htmlContent) => {
+        return { __html: htmlContent };
+    };
+
+    useEffect(() => {
+        const styleTag = document.createElement('style');
+        styleTag.innerHTML = `
+            .question-content table {
+                border-collapse: collapse;
+                margin: 15px 0;
+                font-size: 14px;
+            }
+            .question-content th {
+                background-color: #f2f2f2;
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+            }
+            .question-content td {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+        `;
+        document.head.appendChild(styleTag);
+    }, []);
+
     return (
         <div className="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
             <div className="mb-2 text-sm text-gray-500">
                 Question {currentQuestionIndex + 1} of {questions.length}
             </div>
 
-            <h2 className="text-lg font-semibold mb-4 text-gray-800">{currentQuestion.question}</h2>
+            <div
+                className="text-lg font-semibold mb-4 text-gray-800 question-content"
+                dangerouslySetInnerHTML={renderHTML(currentQuestion.question)}
+            />
 
             <div className="space-y-3">
                 {optionKeys.map((key) => (
@@ -38,11 +68,14 @@ export default function QuestionCard() {
                             onClick={() => handleOptionSelect(key)}
                         >
                             <span className="font-medium mr-2">{key.toUpperCase()}.</span>
-                            {currentQuestion.options[key]}
+                            {typeof currentQuestion.options[key] === 'string' && currentQuestion.options[key].includes('<')
+                                ? <span className='question-content' dangerouslySetInnerHTML={renderHTML(currentQuestion.options[key])} />
+                                : currentQuestion.options[key]
+                            }
                         </button>
                     </div>
                 ))}
             </div>
         </div>
     );
-}
+};
