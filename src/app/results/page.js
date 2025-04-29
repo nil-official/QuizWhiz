@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetQuiz } from '../../redux/quizSlice';
 import { formatTime } from '../../utils/helpers';
+import { commonStyles } from '@/utils/styles';
+import { useInjectStyles } from '@/hooks/useInjectStyles';
 
 export default function ResultsPage() {
     const router = useRouter();
@@ -16,6 +18,8 @@ export default function ResultsPage() {
         totalTime,
         isQuizFinished
     } = useSelector((state) => state.quiz);
+
+    useInjectStyles(commonStyles.questionContent, 'question-card-styles');
 
     useEffect(() => {
         // Redirect to home if quiz hasn't finished
@@ -41,6 +45,10 @@ export default function ResultsPage() {
     }
 
     const scorePercentage = (score / questions.length) * 100;
+
+    const renderHTML = (htmlContent) => {
+        return { __html: htmlContent };
+    };
 
     return (
         <main className="min-h-screen bg-gray-50 py-12 px-4">
@@ -104,7 +112,10 @@ export default function ResultsPage() {
                                             {questionIndex + 1}
                                         </span>
                                         <div className="flex-1">
-                                            <h3 className="text-gray-600 font-medium mb-2">{question.question}</h3>
+                                            <div
+                                                className="font-medium mb-2 text-gray-600 question-content"
+                                                dangerouslySetInnerHTML={renderHTML(question.question)}
+                                            />
 
                                             <div className="space-y-1 mb-3">
                                                 {optionKeys.map((key) => {
@@ -119,7 +130,12 @@ export default function ResultsPage() {
                                                     return (
                                                         <div key={key} className={optionClass}>
                                                             <span>{key.toUpperCase()}. </span>
-                                                            {question.options[key]}
+
+                                                            {typeof question.options[key] === 'string' && question.options[key].includes('<')
+                                                                ? <span className='question-content' dangerouslySetInnerHTML={renderHTML(question.options[key])} />
+                                                                : question.options[key]
+                                                            }
+
                                                             {key === question.answer &&
                                                                 <span className="ml-2 text-xs bg-green-100 text-green-800 rounded px-1 py-0.5">Correct</span>
                                                             }
@@ -133,7 +149,12 @@ export default function ResultsPage() {
 
                                             {!isCorrect && (
                                                 <p className="text-sm text-gray-500">
-                                                    The correct answer is: <span className="font-medium">{question.answer.toUpperCase()}. {question.options[question.answer]}</span>
+                                                    The correct answer is: <span className="font-medium">
+                                                        {question.answer.toUpperCase()}. {typeof question.options[question.answer] === 'string' && question.options[question.answer].includes('<')
+                                                            ? <span className='question-content' dangerouslySetInnerHTML={renderHTML(question.options[question.answer])} />
+                                                            : question.options[question.answer]
+                                                        }
+                                                    </span>
                                                 </p>
                                             )}
                                         </div>

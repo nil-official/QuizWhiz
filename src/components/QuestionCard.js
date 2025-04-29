@@ -1,38 +1,15 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { answerQuestion } from '../redux/quizSlice';
+import { commonStyles } from '@/utils/styles';
+import { useInjectStyles } from '@/hooks/useInjectStyles';
 
 export default function QuestionCard() {
     const dispatch = useDispatch();
     const { questions, currentQuestionIndex, userAnswers } = useSelector((state) => state.quiz);
 
-    useEffect(() => {
-        const styleTag = document.createElement('style');
-        styleTag.innerHTML = `
-            .question-content table {
-                border-collapse: collapse;
-                margin: 15px 0;
-                font-size: 14px;
-            }
-            .question-content th {
-                background-color: #f2f2f2;
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: center;
-            }
-            .question-content td {
-                border: 1px solid #ddd;
-                padding: 8px;
-            }
-        `;
-        document.head.appendChild(styleTag);
-
-        return () => {
-            document.head.removeChild(styleTag);
-        };
-    }, []);
+    useInjectStyles(commonStyles.questionContent, 'question-card-styles');
 
     if (!questions || questions.length === 0) {
         return <div className="text-center p-4">No questions loaded</div>;
