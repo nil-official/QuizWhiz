@@ -18,5 +18,15 @@
             "d": "Rome"
         },
         "answer": "c"
+    },
+    {
+        "question": "Refer to the following elements and their atomic numbers:<br><table><tr><th>Element</th><th>Atomic Number</th></tr><tr><td>Oxygen</td><td>8</td></tr><tr><td>Carbon</td><td>6</td></tr><tr><td>Helium</td><td>2</td></tr><tr><td>Neon</td><td>12</td></tr></table>Which atomic number is incorrect?",
+        "options": {
+            "a": "8",
+            "b": "6",
+            "c": "2",
+            "d": "12"
+        },
+        "answer": "d"
     }
 ]
