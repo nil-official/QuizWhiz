@@ -8,22 +8,6 @@ export default function QuestionCard() {
     const dispatch = useDispatch();
     const { questions, currentQuestionIndex, userAnswers } = useSelector((state) => state.quiz);
 
-    if (!questions || questions.length === 0) {
-        return <div className="text-center p-4">No questions loaded</div>;
-    }
-
-    const currentQuestion = questions[currentQuestionIndex];
-    const currentAnswer = userAnswers[currentQuestionIndex];
-    const optionKeys = Object.keys(currentQuestion.options);
-
-    const handleOptionSelect = (optionKey) => {
-        dispatch(answerQuestion({ questionIndex: currentQuestionIndex, answerKey: optionKey }));
-    };
-
-    const renderHTML = (htmlContent) => {
-        return { __html: htmlContent };
-    };
-
     useEffect(() => {
         const styleTag = document.createElement('style');
         styleTag.innerHTML = `
@@ -44,7 +28,27 @@ export default function QuestionCard() {
             }
         `;
         document.head.appendChild(styleTag);
+
+        return () => {
+            document.head.removeChild(styleTag);
+        };
     }, []);
+
+    if (!questions || questions.length === 0) {
+        return <div className="text-center p-4">No questions loaded</div>;
+    }
+
+    const currentQuestion = questions[currentQuestionIndex];
+    const currentAnswer = userAnswers[currentQuestionIndex];
+    const optionKeys = Object.keys(currentQuestion.options);
+
+    const handleOptionSelect = (optionKey) => {
+        dispatch(answerQuestion({ questionIndex: currentQuestionIndex, answerKey: optionKey }));
+    };
+
+    const renderHTML = (htmlContent) => {
+        return { __html: htmlContent };
+    };
 
     return (
         <div className="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
