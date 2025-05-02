@@ -38,6 +38,21 @@ export default function QuestionCard() {
                 dangerouslySetInnerHTML={renderHTML(currentQuestion.question)}
             />
 
+            {currentQuestion.link && (
+                <div className="mb-4">
+                    <div className="mt-1 text-sm text-gray-500">
+                        <a
+                            href={currentQuestion.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 hover:underline"
+                        >
+                            View resource
+                        </a>
+                    </div>
+                </div>
+            )}
+
             <div className="space-y-3">
                 {optionKeys.map((key) => (
                     <div key={key} className="flex items-center">
