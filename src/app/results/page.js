@@ -117,6 +117,21 @@ export default function ResultsPage() {
                                                 dangerouslySetInnerHTML={renderHTML(question.question)}
                                             />
 
+                                            {question.link && (
+                                                <div className="mb-4">
+                                                    <div className="mt-1 text-sm text-gray-500">
+                                                        <a
+                                                            href={question.link}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-blue-500 hover:underline"
+                                                        >
+                                                            View resource
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            )}
+
                                             <div className="space-y-1 mb-3">
                                                 {optionKeys.map((key) => {
                                                     let optionClass = "text-gray-700";
